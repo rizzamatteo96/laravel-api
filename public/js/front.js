@@ -2316,6 +2316,13 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return day + '/' + month + '/' + year;
+    },
+    sliceText: function sliceText(text, maxChar) {
+      if (text.length > maxChar) {
+        return text.substr(0, maxChar) + '...';
+      }
+
+      return text;
     }
   }
 });
@@ -38121,7 +38128,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("p", { staticClass: "card-text" }, [
-                _vm._v(_vm._s(post.description))
+                _vm._v(_vm._s(_vm.sliceText(post.description, 40)))
               ]),
               _vm._v(" "),
               _c("p", { staticClass: "card-text" }, [

@@ -7,7 +7,7 @@
         <div class="card text-dark bg-light">
           <div class="card-body">
             <h3 class="card-title">{{post.title}}</h3>
-            <p class="card-text">{{post.description}}</p>
+            <p class="card-text">{{sliceText(post.description, 40)}}</p>
             <p class="card-text"><small class="text-muted">{{takeData(post.created_at)}}</small></p>
             <button type="button" class="btn btn-outline-dark">Leggi articolo</button>
           </div>
@@ -86,6 +86,13 @@ export default {
 
       return day + '/' + month + '/' + year;
 
+    },
+    sliceText(text,maxChar){
+      if(text.length > maxChar){
+        return text.substr(0, maxChar) + '...';
+      }
+      
+      return text;
     }
   }
 }
