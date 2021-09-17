@@ -104,7 +104,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Boolean\corso-live#36\1-ESERCIZI\mamp_public\2021-09\2021-09-17\laravel-vue\resources\js\front.js */"./resources/js/front.js");
+module.exports = __webpack_require__(/*! C:\Boolean\corso-live#36\1-ESERCIZI\mamp_public\2021-09\2021-09-17\laravel-api\resources\js\front.js */"./resources/js/front.js");
 
 
 /***/ })
