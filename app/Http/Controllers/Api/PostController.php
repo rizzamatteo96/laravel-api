@@ -17,7 +17,7 @@ class PostController extends Controller
     public function index()
     {
         // richiamo i post presenti nel sito tramite il model Post per farli visualizzare come API ai guest
-        $posts = Post::all();
+        $posts = Post::paginate(6);
 
         // restituisco un JSON visibile anche alla route che si trova in api.php
         return response()->json([

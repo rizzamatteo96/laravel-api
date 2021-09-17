@@ -2247,25 +2247,75 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Main',
   data: function data() {
     return {
       urlApi: 'http://127.0.0.1:8000/api/posts',
-      posts: []
+      posts: [],
+      actualPage: 1,
+      lastPage: null
     };
   },
   created: function created() {
-    this.getPosts();
+    this.getPosts(1);
   },
   methods: {
-    getPosts: function getPosts() {
+    getPosts: function getPosts(page) {
       var _this = this;
 
-      axios.get(this.urlApi).then(function (response) {
-        // console.log(response.data.results);
-        _this.posts = response.data.results;
+      axios.get(this.urlApi, {
+        params: {
+          page: page
+        }
+      }).then(function (response) {
+        console.log(response.data);
+        _this.posts = response.data.results.data;
+        _this.actualPage = response.data.results.current_page;
+        _this.lastPage = response.data.results.last_page;
       });
+    },
+    takeData: function takeData(date) {
+      var d = new Date(date);
+      var year = d.getFullYear();
+      var month = parseInt(d.getMonth() + 1);
+      var day = d.getDate();
+
+      if (month < 10) {
+        month = '0' + month;
+      }
+
+      if (day < 10) {
+        day = '0' + day;
+      }
+
+      return day + '/' + month + '/' + year;
     }
   }
 });
@@ -38076,7 +38126,7 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "card-text" }, [
                 _c("small", { staticClass: "text-muted" }, [
-                  _vm._v(_vm._s(post.created_at))
+                  _vm._v(_vm._s(_vm.takeData(post.created_at)))
                 ])
               ]),
               _vm._v(" "),
@@ -38093,6 +38143,101 @@ var render = function() {
         ])
       }),
       0
+    ),
+    _vm._v(" "),
+    _c(
+      "nav",
+      {
+        staticClass: "mt-5",
+        attrs: { "aria-label": "Page navigation example" }
+      },
+      [
+        _c(
+          "ul",
+          { staticClass: "pagination" },
+          [
+            _c(
+              "li",
+              {
+                staticClass: "page-item",
+                class: { disabled: _vm.actualPage == 1 }
+              },
+              [
+                _c(
+                  "button",
+                  {
+                    staticClass: "page-link",
+                    attrs: { "aria-label": "Previous" },
+                    on: {
+                      click: function($event) {
+                        return _vm.getPosts(_vm.actualPage - 1)
+                      }
+                    }
+                  },
+                  [
+                    _c("span", { attrs: { "aria-hidden": "true" } }, [
+                      _vm._v("«")
+                    ])
+                  ]
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _vm._l(_vm.lastPage, function(i) {
+              return _c(
+                "li",
+                {
+                  key: i,
+                  staticClass: "page-item",
+                  class: { active: _vm.actualPage == i }
+                },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "page-link",
+                      on: {
+                        click: function($event) {
+                          return _vm.getPosts(i)
+                        }
+                      }
+                    },
+                    [_vm._v(_vm._s(i))]
+                  )
+                ]
+              )
+            }),
+            _vm._v(" "),
+            _c(
+              "li",
+              {
+                staticClass: "page-item",
+                class: { disabled: _vm.actualPage == _vm.lastPage }
+              },
+              [
+                _c(
+                  "button",
+                  {
+                    staticClass: "page-link",
+                    attrs: { "aria-label": "Next" },
+                    on: {
+                      click: function($event) {
+                        return _vm.getPosts(_vm.actualPage + 1)
+                      }
+                    }
+                  },
+                  [
+                    _c("span", { attrs: { "aria-hidden": "true" } }, [
+                      _vm._v("»")
+                    ])
+                  ]
+                )
+              ]
+            )
+          ],
+          2
+        )
+      ]
     )
   ])
 }
